@@ -9,11 +9,18 @@
 import UIKit
 import MediaPlayer
 
-class AllSongsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-   @IBOutlet var allSongsTableView : UITableView?
-   @IBOutlet var backBtn : UIButton?
+struct Options{
+    static let Play = "Play"
+    static let AddToPlaylist = "Add to playlist"
+    static let PlayNext = "Play Next"
+    static let Cancel = "Cancel"
+}
 
+class AllSongsVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
+    
+    @IBOutlet var allSongsTableView : UITableView?
+    @IBOutlet var backBtn : UIButton?
+    
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
@@ -30,9 +37,11 @@ class AllSongsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return sfCoreDataManager.allMediaItems().count
     }
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
         let songCell : UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: "SongsCell", for: indexPath)
+        songCell?.selectionStyle = UITableViewCellSelectionStyle.none
         
         let index : Int = indexPath.row
         
@@ -47,16 +56,59 @@ class AllSongsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let artistLabel : UILabel? = songCell?.contentView.viewWithTag(33333) as? UILabel
         artistLabel?.text = allSFItems[index].value(forProperty: MPMediaItemPropertyArtist) as! String?
         
+        let optionsBtn = songCell?.contentView.viewWithTag(44444) as? UIButton
+        optionsBtn?.indexPath = indexPath
+        optionsBtn?.addTarget(self, action:#selector(optionBtnAction), for: UIControlEvents.touchUpInside)
+        
         if index%2 == 0 {
             songCell?.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         }
         else{
             songCell?.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         }
-      
-        return songCell!
         
+        return songCell!
     }
     
+    // MARK: UITableViewDelegate methods
+
+//    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?{
+//        return nil
+//    }
     
+    //MARK : Helpers
+    
+    @IBAction func optionBtnAction(sender : UIButton?){
+        
+        let alertViewController = UIAlertController.init(title: "Select Option", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        let playAction = UIAlertAction.init(title: Options.Play, style: UIAlertActionStyle.default) { (self) in
+            sfCoreDataManager.addOrUpdateItemsInCoreData()
+            sfAudiioController.playSongWithItem(item: (sfCoreDataManager.existingItemsInDatabase()?[(sender?.indexPath?.row)!])!)
+        }
+        let AddToPlaylistAction = UIAlertAction.init(title: Options.AddToPlaylist, style: UIAlertActionStyle.default) { (self) in
+            /*PlaylistVC* objPlaylistVC = [PlaylistVC instantiateWithStoryboard:SB_Player];
+             objPlaylistVC.isForAddingSongToPlaylist = YES;
+             objPlaylistVC.itemToAddToPlaylist = itemToAdd;*/
+        }
+        let PlayNextAction = UIAlertAction.init(title: Options.PlayNext, style: UIAlertActionStyle.default) { (self) in
+            
+            /*  SFMediaAsset.shuffleModeOn = NO;
+             
+             SFMediaAsset.userSelectedNextItem = itemToAdd;
+             SFMediaAsset.alreadyPlayedUserSelectedNextItem = NO;
+             
+             [SFAppDelegate showAlertOnColtroller:self WithTitle:nil message:@"Playing next..!!"];*/
+        }
+      
+        let cancelAction = UIAlertAction.init(title: Options.Cancel, style: UIAlertActionStyle.cancel, handler: nil)
+        
+        alertViewController.addAction(playAction)
+        alertViewController.addAction(AddToPlaylistAction)
+        alertViewController.addAction(PlayNextAction)
+        alertViewController.addAction(cancelAction)
+
+        self.present(alertViewController, animated: true, completion: nil)
+    }
+   
 }

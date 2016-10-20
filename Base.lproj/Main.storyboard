@@ -125,7 +125,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="4ZU-2u-vK2" firstAttribute="leading" secondItem="Tbb-yf-pXb" secondAttribute="leadingMargin" constant="-20" id="1Q5-xO-P6h"/>
-                            <constraint firstItem="bLo-J5-WEH" firstAttribute="top" secondItem="YLG-72-E7X" secondAttribute="bottom" constant="70" id="Zu8-NE-lW6"/>
+                            <constraint firstItem="bLo-J5-WEH" firstAttribute="top" secondItem="YLG-72-E7X" secondAttribute="bottom" id="8EV-bC-YUE"/>
                             <constraint firstItem="YLG-72-E7X" firstAttribute="leading" secondItem="Tbb-yf-pXb" secondAttribute="leading" id="d59-uW-yuU"/>
                             <constraint firstAttribute="trailing" secondItem="YLG-72-E7X" secondAttribute="trailing" id="ktY-pB-Aya"/>
                             <constraint firstItem="YLG-72-E7X" firstAttribute="top" secondItem="4ZU-2u-vK2" secondAttribute="bottom" constant="-2" id="mKn-HV-1A5"/>

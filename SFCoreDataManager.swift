@@ -17,8 +17,6 @@ enum DatabaseErrors: Error {
 class SFCoreDataManager: NSObject {
     
     static let sharedInstance = SFCoreDataManager()
-    
-    
 
     func addOrUpdateItemsInCoreData() {
         
