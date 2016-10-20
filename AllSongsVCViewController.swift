@@ -1,5 +1,5 @@
 //
-//  AllSongsVCViewController.swift
+//  AllSongsVC.swift
 //  Soundify
 //
 //  Created by MaahiHiten on 19/10/16.
