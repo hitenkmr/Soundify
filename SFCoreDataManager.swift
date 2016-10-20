@@ -123,6 +123,18 @@ class SFCoreDataManager: NSObject {
         return MPMediaQuery.songs().items!
     }
     
+    func allPlayLists() -> [MPMediaItemCollection] {
+        return MPMediaQuery.playlists().collections!
+    }
+    
+    func allAlbums() -> [MPMediaItemCollection] {
+        return MPMediaQuery.albums().collections!
+    }
+    
+    func allArtists() -> [MPMediaItemCollection] {
+        return MPMediaQuery.playlists().collections!
+    }
+    
     func mediaItem(withPersistenceId itemPersistenceId : String) -> MPMediaItem? {
         
         let allMediaItems : [MPMediaItem] = self.allMediaItems()
