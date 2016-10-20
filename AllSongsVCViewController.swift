@@ -111,5 +111,7 @@ class AllSongsVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
         self.present(alertViewController, animated: true, completion: nil)
     }
    
-   
+    func playNextSong() {
+        
+    }
 }
